@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZYNKA PAYMENT</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url('https://files.catbox.moe/6rt0bm.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', monospace;
+  }
+  .card {
+    background-color: rgba(0,0,0,0.6);
+    padding: 30px 50px;
+    border-radius: 15px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    min-width: 300px;
+  }
+  .loading-box {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+  }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .btn {
+    padding: 10px 25px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #7f8c8d;
+    color: #fff;
+    font-style: italic;
+    font-family: 'Courier New', monospace;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+  }
+  .btn.show { opacity: 1; }
+  h1 {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 36px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+  }
+  h1.show { opacity: 1; }
+  #danaNumber {
+    display: none;
+    margin-top: 10px;
+    font-size: 20px;
+    font-style: italic;
+  }
+  #copyBtn {
+    display: none;
+    padding: 8px 20px;
+    margin-top: 5px;
+    background-color: #7f8c8d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-style: italic;
+    font-family: 'Courier New', monospace;
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <!-- Loading -->
+  <div id="loadingContainer">
+    <div class="loading-box"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Tombol Cek Payment -->
+  <button class="btn" id="checkBtn">Cek Payment</button>
+
+  <!-- Payment Info -->
+  <div id="paymentInfo">
+    <h1 id="logo">𝙕𝙔𝙉𝙆𝘼 𝙋𝘼𝙔𝙈𝙀𝙉𝙏</h1>
+
+    <!-- Tombol DANA -->
+    <button class="btn" id="danaBtn">DANA</button>
+    <div id="danaNumber">085606123943</div>
+    <button id="copyBtn" onclick="copyText('085606123943')">Salin</button>
+
+    <!-- Tombol WhatsApp -->
+    <button class="btn" id="waBtn" onclick="window.open('https://wa.me/6285606123943', '_blank')">WhatsApp</button>
+  </div>
+</div>
+
+<script>
+  const loadingContainer = document.getElementById('loadingContainer');
+  const checkBtn = document.getElementById('checkBtn');
+  const paymentInfo = document.getElementById('paymentInfo');
+  const h1Logo = paymentInfo.querySelector('h1');
+  const danaBtn = document.getElementById('danaBtn');
+  const waBtn = document.getElementById('waBtn');
+  const danaNumber = document.getElementById('danaNumber');
+  const copyBtn = document.getElementById('copyBtn');
+
+  // Hide initial
+  checkBtn.style.display = 'none';
+  paymentInfo.style.display = 'none';
+
+  // Loading 3 detik
+  setTimeout(() => {
+    loadingContainer.style.display = 'none';
+    checkBtn.style.display = 'inline-block';
+    setTimeout(() => checkBtn.classList.add('show'), 50);
+  }, 3000);
+
+  // Tombol Cek Payment klik
+  checkBtn.addEventListener('click', () => {
+    checkBtn.style.display = 'none';
+    paymentInfo.style.display = 'block';
+    setTimeout(() => {
+      h1Logo.classList.add('show');
+      danaBtn.classList.add('show');
+      waBtn.classList.add('show');
+    }, 50);
+  });
+
+  // Tombol DANA klik → tampil nomor + tombol salin
+  danaBtn.addEventListener('click', () => {
+    danaNumber.style.display = 'block';
+    copyBtn.style.display = 'inline-block';
+  });
+
+  function copyText(text) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert('Nomor berhasil disalin: ' + text))
+      .catch(err => console.error('Gagal menyalin:', err));
+  }
+</script>
+
+</body>
+</html>
